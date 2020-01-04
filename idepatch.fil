@@ -1,0 +1,47 @@
+;*******************************************************************************
+;* IDE Autoboot for TOS 1.04: Allows TOS 1.04 to boot from IDE master 0.
+;* Copyright (c) 2020, Christian Zietz <czietz@gmx.net>
+;* Command file for TOSPATCH.TTP.
+
+;*******************************************************************************
+;* TOS 1.04 settings
+
+.BASE   = FC0000    ;TOS ROM address (TOS 1.04: $FC0000)
+.LENGTH =  30000    ;TOS length      (TOS 1.04:  $30000)
+.WIDTH  =    .16    ;TOS ROM width   (TOS 1.04:     .16)
+
+.NATION = .FRG      ;TOS country code: Germany          <=== UNCOMMENT AS NEEDED
+;.NATION = .USA     ;TOS country code: US               <=== UNCOMMENT AS NEEDED
+;.NATION = .UK      ;TOS country code: UK               <=== UNCOMMENT AS NEEDED
+;.NATION = .HOL     ;TOS country code: Netherlands      <=== UNCOMMENT AS NEEDED
+;.NATION = .SWE     ;TOS country code: Sweden           <=== UNCOMMENT AS NEEDED
+
+;*******************************************************************************
+;* Input file
+
+<TOS104GE.IMG       ;Read unpatched TOS 1.04 from this file          <=== MODIFY
+
+=06.04.1989,.NATION ;Only accept TOS ROM with this date
+                    ;and country code as defined above.
+
+;*******************************************************************************
+;* Output file(s)
+
+>1        ; single TOS ROM image file (TOS.IMG).           <=== MODIFY AS NEEDED
+;>2        ; 2 TOS ROM image files (TOS.LO/HI).            <=== MODIFY AS NEEDED
+;>6        ; 6 TOS ROM image files (TOS.LO?/HI?).          <=== MODIFY AS NEEDED
+
+;****************** DO NOT MODIFY ANYTHING BELOW THIS LINE ;********************
+;*******************************************************************************
+;* IDE Autoboot
+
+_SWITCH .NATION
+_CASE .FRA:
+_ERROR 'French TOS is not supported'
+_CASE .SPA:
+_ERROR 'Spanish TOS is not supported'
+_ENDSWITCH
+
+462 $4E,B9,2FE46+.BASE.L,4E,71   ; JSR ideboot. NOP.
+7EE $4E,F9,2FE00+.BASE.L         ; JMP dmaread.
+2FE00 IDEBOOT.BIN                ; the actual code
