@@ -20,6 +20,7 @@
 ;* Input file
 
 <TOS104GE.IMG       ;Read unpatched TOS 1.04 from this file          <=== MODIFY
+;<*                 ;Read ROM from the Atari.           <=== UNCOMMENT IF WANTED
 
 =06.04.1989,.NATION ;Only accept TOS ROM with this date
                     ;and country code as defined above.
