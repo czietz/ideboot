@@ -121,7 +121,7 @@ ideboot:
 	jsr		HOOK5
 #endif
 	move.l	diskbuf,A0
-	move.q	#0,D0	// root sector
+	moveq	#0,D0	// root sector
 	jbsr	ideread
 	jbne	noboot	// ideread also sets condition codes
 	cmp.w	#0x1234,D1
