@@ -2,10 +2,16 @@ CC=m68k-atari-mint-gcc
 
 .PHONY: clean default
 
-default: ideboot.bin ideboot.lst
+default: ideboo14.bin ideboo14.lst ideboo16.bin ideboo16.lst
 
 clean:
-	rm -f ideboot.o ideboot.bin ideboot.lst
+	rm -f ideboot.o ideboo??.bin ideboo??.lst
+
+ideboo14.o: ideboot.S
+	$(CC) -DTOS104 -c -o $@ $<
+
+ideboo16.o: ideboot.S
+	$(CC) -DTOS16x -c -o $@ $<
 
 %.bin: %.o
 	m68k-atari-mint-objcopy -O binary $< $@

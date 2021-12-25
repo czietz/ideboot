@@ -1,0 +1,34 @@
+;*******************************************************************************
+;* IDE Autoboot: Allows TOS 1.06 to boot from IDE master 0.
+;* Copyright (c) 2021, Christian Zietz <czietz@gmx.net>
+;* Command file for TOSPATCH.TTP.
+
+;*******************************************************************************
+;* TOS 1.06 settings
+
+.BASE   = E00000    ;TOS ROM address (TOS 1.06: $E00000)
+.LENGTH =  40000    ;TOS length      (TOS 1.06:  $40000)
+.WIDTH  =    .16    ;TOS ROM width   (TOS 1.06:     .16)
+
+;*******************************************************************************
+;* Input file
+
+<TOS106DE.IMG       ;Read unpatched TOS 1.06 from this file          <=== MODIFY
+;<*                 ;Read ROM from the Atari.           <=== UNCOMMENT IF WANTED
+
+=29.07.1989         ;Only accept TOS ROM with this date
+
+;*******************************************************************************
+;* Output file(s)
+
+>1        ; single TOS ROM image file (TOS.IMG).           <=== MODIFY AS NEEDED
+;>2        ; 2 TOS ROM image files (TOS.LO/HI).            <=== MODIFY AS NEEDED
+;>6        ; 6 TOS ROM image files (TOS.LO?/HI?).          <=== MODIFY AS NEEDED
+
+;****************** DO NOT MODIFY ANYTHING BELOW THIS LINE ;********************
+;*******************************************************************************
+;* IDE Autoboot
+
+572 $4E,B9,3FE46+.BASE.L,4E,71   ; JSR ideboot. NOP.
+970 $4E,F9,3FE00+.BASE.L         ; JMP dmaread.
+3FE00 IDEBOO16.BIN               ; the actual code

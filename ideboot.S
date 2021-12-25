@@ -1,9 +1,9 @@
 /*
  *
- * IDE Autoboot for TOS 1.04: Allows TOS 1.04 to boot from IDE master 0.
- * Code to be compiled with GNU as and patched into TOS 1.04 ROMs with TOSPatch.
+ * IDE Autoboot for TOS 1.04, 1.06, 1.62 : Allows TOS to boot from IDE master 0.
+ * Code to be compiled with GNU as and patched into TOS ROMs with TOSPatch.
  *
- * Copyright (c) 2020, Christian Zietz <czietz@gmx.net>
+ * Copyright (c) 2020-2021, Christian Zietz <czietz@gmx.net>
  * 
  * Redistribution and use in source and binary forms, with or without
  * modification, are permitted provided that the following conditions are met:
@@ -26,8 +26,8 @@
  * SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  *
  *
- * NOTE: The license only applies to this code. Patched TOS 1.04 ROMs containing
- * this code are still subject to copyright by Atari and MUST NOT be distributed!
+ * NOTE: The license only applies to this code. Patched TOS ROMs containing this
+ * code are still subject to copyright by Atari and MUST NOT be distributed!
  *
  */
 
@@ -52,6 +52,7 @@
 #define DMAr		0x444D4172
 #define EUNDEV		-15
 
+#ifdef TOS104
 // TOS hooks, for TOS 1.04, German and other languages
 #define HOOK1		0xFC07F4
 #define HOOK2		0xFC0802
@@ -60,6 +61,18 @@
 #define HOOK4		0xFC0530
 #define HOOK5		0xFC054C
 #define HOOK6		0xFC0462
+#endif
+
+#ifdef TOS16x
+// TOS hooks, for TOS 1.06 and 1.62
+#define HOOK1		0xE00976
+#define HOOK2		0xE00984
+#define HOOK3		0xE00970
+
+#define HOOK4		0xE00640
+#define HOOK5		0xE0065C
+#define HOOK6		0xE00572
+#endif
 
 /* TEST code */
 #ifdef TEST
