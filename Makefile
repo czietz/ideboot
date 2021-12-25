@@ -5,7 +5,7 @@ CC=m68k-atari-mint-gcc
 default: ideboo14.bin ideboo14.lst ideboo16.bin ideboo16.lst
 
 clean:
-	rm -f ideboot.o ideboo??.bin ideboo??.lst
+	rm -f ideboo??.o ideboo??.bin ideboo??.lst
 
 ideboo14.o: ideboot.S
 	$(CC) -DTOS104 -c -o $@ $<
