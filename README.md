@@ -1,5 +1,5 @@
 # ideboot
-IDE Autoboot patch for TOS 1.06, 1.06 and 1.62
+IDE Autoboot patch for TOS 1.04, 1.06 and 1.62
 
 Copyright (c) 2020-2021, Christian Zietz <czietz@gmx.net>
 
