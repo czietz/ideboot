@@ -29,6 +29,6 @@
 ;*******************************************************************************
 ;* IDE Autoboot
 
-572 $4E,B9,3FE46+.BASE.L,4E,71   ; JSR ideboot. NOP.
-970 $4E,F9,3FE00+.BASE.L         ; JMP dmaread.
+572 $4E,B9,3FE26+.BASE.L,4E,71   ; JSR ideboot. NOP.
+A82 3FE00+.BASE.L                ; addr dmaread.
 3FE00 IDEBOO16.BIN               ; the actual code

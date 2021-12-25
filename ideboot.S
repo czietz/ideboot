@@ -54,9 +54,7 @@
 
 #ifdef TOS104
 // TOS hooks, for TOS 1.04, German and other languages
-#define HOOK1		0xFC07F4
-#define HOOK2		0xFC0802
-#define HOOK3		0xFC07EE
+#define HOOK3		0xFC08F4
 
 #define HOOK4		0xFC0530
 #define HOOK5		0xFC054C
@@ -65,9 +63,7 @@
 
 #ifdef TOS16x
 // TOS hooks, for TOS 1.06 and 1.62
-#define HOOK1		0xE00976
-#define HOOK2		0xE00984
-#define HOOK3		0xE00970
+#define HOOK3		0xE00A82
 
 #define HOOK4		0xE00640
 #define HOOK5		0xE0065C
@@ -91,26 +87,14 @@ _START:
  * To be hooked at address HOOK3
  */
 dmaread:
-	cmp.w	#42,D0		// DMAread opcode
-	jbeq	doread
-	// run opcodes overwritten at HOOK3
-	cmp.w	(A0)+,D0
-	jblt	validopcode
-	jmp		HOOK2
-validopcode:
-	lsl.w	#2,D0
-	jmp		HOOK1
-
-doread:
-	cmp.w	#16,10(SP)	// IDE device 0
-	jbeq	doread1
 	moveq	#EUNDEV,D0
-	jmp		HOOK2
+	cmp.w	#16,14(SP)	// IDE device 0
+	jbne	doreadout
 
 doread1:
-	move.l	(SP),D3		// Sector no
-	move.w	4(SP),D4	// Count
-	move.l	6(SP),A0	// Buffer
+	move.l	4(SP),D3	// Sector no
+	move.w	8(SP),D4	// Count
+	move.l	10(SP),A0	// Buffer
 	subq	#1,D4		// Because of DBRA
 doread2:
 	move.l	D3,D0
@@ -121,7 +105,7 @@ doread2:
 doreadout:
 	// D0 = 0 if everything was OK
 	// D0 = -1 (ERROR, unspecifed) if there was an error in ideread
-	jmp		HOOK2
+	rts
 
 
 /* Try to boot from IDE device 0.
