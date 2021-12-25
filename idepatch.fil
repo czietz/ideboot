@@ -15,6 +15,7 @@
 ;.NATION = .UK      ;TOS country code: UK               <=== UNCOMMENT AS NEEDED
 ;.NATION = .HOL     ;TOS country code: Netherlands      <=== UNCOMMENT AS NEEDED
 ;.NATION = .SWE     ;TOS country code: Sweden           <=== UNCOMMENT AS NEEDED
+;.NATION = .SPA     ;TOS country code: Spain            <=== UNCOMMENT AS NEEDED
 
 ;*******************************************************************************
 ;* Input file
@@ -39,10 +40,8 @@
 _SWITCH .NATION
 _CASE .FRA:
 _ERROR 'French TOS is not supported'
-_CASE .SPA:
-_ERROR 'Spanish TOS is not supported'
 _ENDSWITCH
 
-462 $4E,B9,2FE26+.BASE.L,4E,71   ; JSR ideboot. NOP.
-8F4 $2FE00+.BASE.L               ; dmaread into disp. table
-2FE00 IDEBOO14.BIN               ; the actual code
+462 $4E,B9,2FEA0+26+.BASE.L,4E,71; JSR ideboot. NOP.
+8F4 $2FEA0+.BASE.L               ; dmaread into disp. table
+2FEA0 IDEBOO14.BIN               ; the actual code
