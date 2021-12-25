@@ -52,6 +52,9 @@
 #define DMAr		0x444D4172
 #define EUNDEV		-15
 
+#define RDY_TIMEOUT	100 // 0.5 s
+#define DRQ_TIMEOUT	400 // 2 s
+
 #ifdef TOS104
 // TOS hooks, for TOS 1.04, German and other languages
 #define HOOK3		0xFC08F4
@@ -151,7 +154,7 @@ ideread:
 	
 	// select device and wait for DRDY
 	move.l	hz200,D1
-	add.l	#100,D1
+	add.l	#RDY_TIMEOUT,D1
 	move.b	#0,HEAD
 	clr.b	IDECONTROL
 waitdrdy:
@@ -176,7 +179,7 @@ ready:
 
 	// wait for DRQ
 	move.l	hz200,D1
-	add.l	#400,D1
+	add.l	#DRQ_TIMEOUT,D1
 waitdrq:
 	btst	#DRQ,CMDSTAT
 	jbne	readsect
