@@ -43,6 +43,6 @@ _CASE .SPA:
 _ERROR 'Spanish TOS is not supported'
 _ENDSWITCH
 
-462 $4E,B9,2FE46+.BASE.L,4E,71   ; JSR ideboot. NOP.
-7EE $4E,F9,2FE00+.BASE.L         ; JMP dmaread.
+462 $4E,B9,2FE26+.BASE.L,4E,71   ; JSR ideboot. NOP.
+8F4 $2FE00+.BASE.L               ; dmaread into disp. table
 2FE00 IDEBOO14.BIN               ; the actual code
