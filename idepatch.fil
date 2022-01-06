@@ -13,6 +13,7 @@
 .NATION = .FRG      ;TOS country code: Germany          <=== UNCOMMENT AS NEEDED
 ;.NATION = .USA     ;TOS country code: US               <=== UNCOMMENT AS NEEDED
 ;.NATION = .UK      ;TOS country code: UK               <=== UNCOMMENT AS NEEDED
+;.NATION = .FRA     ;TOS country code: France           <=== UNCOMMENT AS NEEDED
 ;.NATION = .HOL     ;TOS country code: Netherlands      <=== UNCOMMENT AS NEEDED
 ;.NATION = .SWE     ;TOS country code: Sweden           <=== UNCOMMENT AS NEEDED
 ;.NATION = .SPA     ;TOS country code: Spain            <=== UNCOMMENT AS NEEDED
@@ -39,9 +40,14 @@
 
 _SWITCH .NATION
 _CASE .FRA:
-_ERROR 'French TOS is not supported'
+; replace DESKTOP.INF by slightly shorter version
+2FD1A DESKFR.INF
+; adjust glue header acoordingly (total length of resource data)
+2BA60 $4498.W
 _ENDSWITCH
 
-462 $4E,B9,2FEA0+26+.BASE.L,4E,71; JSR ideboot. NOP.
-8F4 $2FEA0+.BASE.L               ; dmaread into disp. table
-2FEA0 IDEBOO14.BIN               ; the actual code
+.DMAREAD = 2FEF4
+
+462 $4E,B9,.DMAREAD+26+.BASE.L,4E,71; JSR ideboot. NOP.
+8F4 $.DMAREAD+.BASE.L            ; dmaread into disp. table
+.DMAREAD IDEBOO14.BIN            ; the actual code
