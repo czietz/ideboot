@@ -30,3 +30,9 @@ than sufficient for modern devices such as IDE/SD adapters, CF cards,
 IDE DOMs, etc. Booting from a mechanical harddisk, that takes tens of
 seconds to spin up, might only be possible after pressing the reset
 button.
+
+For French TOS 1.04 users only: As the French translation takes up too much
+ROM space, the default DESKTOP.INF (that is _only_ used when no DESKTOP.INF is
+found on the boot drive) is modified when applying the patch. The entries for
+floppy drive B: and virtual cartridge drive c: are removed. These icons can be
+added again manually, if needed.
