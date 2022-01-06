@@ -17,11 +17,55 @@
 ;.NATION = .HOL     ;TOS country code: Netherlands      <=== UNCOMMENT AS NEEDED
 ;.NATION = .SWE     ;TOS country code: Sweden           <=== UNCOMMENT AS NEEDED
 ;.NATION = .SPA     ;TOS country code: Spain            <=== UNCOMMENT AS NEEDED
+;.NATION = .ITA     ;TOS country code: Italy            <=== UNCOMMENT AS NEEDED
+;.NATION = .SWG     ;TOS country code: Swiss (german)   <=== UNCOMMENT AS NEEDED
+;.NATION = .SWF     ;TOS country code: Swiss (french)   <=== UNCOMMENT AS NEEDED
+;.NATION = .CZE     ;TOS country code: Czech            <=== UNCOMMENT AS NEEDED
 
 ;*******************************************************************************
 ;* Input file
+;* Select image based on nation
 
-<TOS104GE.IMG       ;Read unpatched TOS 1.04 from this file          <=== MODIFY
+_SWITCH .NATION
+
+_CASE .FRG:
+  <tos104de.img	; Read unpatched TOS 1.04 from this file          <=== MODIFY
+
+_CASE .USA:
+  <tos104us.img	; Read unpatched TOS 1.04 from this file          <=== MODIFY
+
+_CASE .UK:
+  <tos104uk.img	; Read unpatched TOS 1.04 from this file          <=== MODIFY
+
+_CASE .FRA:
+  <tos104fr.img	; Read unpatched TOS 1.04 from this file          <=== MODIFY
+
+_CASE .SPA:
+  <tos104es.img	; Read unpatched TOS 1.04 from this file          <=== MODIFY
+
+_CASE .ITA:
+  <tos104it.img	; Read unpatched TOS 1.04 from this file          <=== MODIFY
+
+_CASE .SWF:
+  <tos104sf.img	; Read unpatched TOS 1.04 from this file          <=== MODIFY
+
+_CASE .SWG:
+  <tos104sg.img	; Read unpatched TOS 1.04 from this file          <=== MODIFY
+
+_CASE .SWE:
+  <tos104se.img	; Read unpatched TOS 1.04 from this file          <=== MODIFY
+
+_CASE .HOL:
+  <tos104nl.img	; Read unpatched TOS 1.04 from this file          <=== MODIFY
+
+_CASE .CZE:
+  <tos104cz.img	; Read unpatched TOS 1.04 from this file          <=== MODIFY
+
+_DEFAULT:
+  _ERROR "unsupported country"
+
+_ENDSWITCH
+
 ;<*                 ;Read ROM from the Atari.           <=== UNCOMMENT IF WANTED
 
 =06.04.1989,.NATION ;Only accept TOS ROM with this date
