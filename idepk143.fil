@@ -1,0 +1,39 @@
+;*******************************************************************************
+;* IDE Autoboot: KAOS 1.4.3 dated dated June 8, 1994 boots from IDE master 0.
+;* Copyright (c) 2025, Christian Zietz <czietz@gmx.net>
+;* Command file for TOSPATCH.TTP.
+
+;*******************************************************************************
+;* KAOS 1.4.3 dated June 8, 1994
+
+.BASE   = FC0000    ;TOS ROM address
+.LENGTH =  30000    ;TOS length
+.WIDTH  =    .16    ;TOS ROM width
+
+;*******************************************************************************
+;* Input file
+
+<KOS143DE.IMG       ;Read unpatched ROM image from this file         <=== MODIFY
+;<*                 ;Read ROM from the Atari.           <=== UNCOMMENT IF WANTED
+
+/''
+/'Cannot automatically check build date.'
+/'This patch only works with KAOS 1.4.3 dated June 8, 1994.'
+/'Check the build date shown in the KAOS setup screen!'
+/''
+
+;*******************************************************************************
+;* Output file(s)
+
+>1        ; single TOS ROM image file (TOS.IMG).           <=== MODIFY AS NEEDED
+;>2        ; 2 TOS ROM image files (TOS.LO/HI).            <=== MODIFY AS NEEDED
+;>6        ; 6 TOS ROM image files (TOS.LO?/HI?).          <=== MODIFY AS NEEDED
+
+;****************** DO NOT MODIFY ANYTHING BELOW THIS LINE ;********************
+;*******************************************************************************
+;* IDE Autoboot
+
+B9C $4E,B9,2FE26+.BASE.L,4E,71   ; JSR ideboot.  NOP.
+BA6 $4E,B9,2FE34+.BASE.L,4E,71   ; JSR kaosswap. NOP.
+1270 $2FE00+.BASE.L              ; dmaread into disp. table
+2FE00 IDEBK143.BIN               ; the actual code

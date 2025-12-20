@@ -1,9 +1,10 @@
 /*
  *
  * IDE Autoboot for TOS 1.04, 1.06, 1.62 : Allows TOS to boot from IDE master 0.
+ * Also for KAOS 1.4.3 dated dated June 8, 1994, and KAOS/EOS dated Sept 12, 1995.
  * Code to be compiled with GNU as and patched into TOS ROMs with TOSPatch.
  *
- * Copyright (c) 2020-2021, Christian Zietz <czietz@gmx.net>
+ * Copyright (c) 2020-2025, Christian Zietz <czietz@gmx.net>
  * 
  * Redistribution and use in source and binary forms, with or without
  * modification, are permitted provided that the following conditions are met:
@@ -73,6 +74,24 @@
 #define HOOK6		0xE00572
 #endif
 
+#ifdef KAOS_950912
+// TOS hooks for KAOS/EOS dated September 12, 1995
+
+#define HOOK4		0x00fc0e50
+#define HOOK5		0x00fc0ee6
+#define HOOK6		0x00fc0cc0
+#define HOOK6b		0x00fc0cca
+#endif
+
+#ifdef KAOS_940608
+// TOS hooks for KAOS 1.4.3 dated June 8, 1994
+
+#define HOOK4		0x00fc0d30
+#define HOOK5		0x00fc0dc6
+#define HOOK6		0x00fc0b9c
+#define HOOK6b		0x00fc0ba6
+#endif
+
 /* TEST code */
 #ifdef TEST
 _START:
@@ -117,9 +136,17 @@ doreadout:
 ideboot:
 #ifndef TEST
 	// execute overwritten opcodes
-	jsr		HOOK4
-	jsr		HOOK5
-#endif
+	jsr		HOOK4	// floppy boot
+	jsr		HOOK5	// ACSI boot
+#if defined(KAOS_950912) || defined(KAOS_940608)
+	// KAOS has a setting to swap ACSI <-> floppy
+	jbra	1f
+kaosswap:			// to be hooked at HOOK6b
+	jsr		HOOK5	// ACSI boot
+	jsr		HOOK4	// floppy boot
+1:
+#endif // KAOS_950912 || KAOS_940608
+#endif // TEST
 	move.l	diskbuf,A0
 	moveq	#0,D0	// root sector
 	jbsr	ideread
